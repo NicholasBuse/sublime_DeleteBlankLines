@@ -4,7 +4,7 @@ Delete Blank Lines
 Description
 ------------------
 
-This is a [Sublime Text](http://www.sublimetext.com/ ) plugiin that deletes blank (or surplus blank) lines from a selection
+This is a [Sublime Text](http://www.sublimetext.com/ ) plug-in that deletes blank (or surplus blank) lines from a selection
 
 Shortcut Keys
 ------------------
