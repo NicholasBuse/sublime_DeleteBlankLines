@@ -1,0 +1,16 @@
+[
+  {
+    "command": "delete_blank_lines",
+    "args": { "surplus": true },
+    "keys": [
+      "ctrl+alt+shift+backspace"
+    ]
+  },
+  {
+    "command": "delete_blank_lines",
+    "args": { "surplus": false },
+    "keys": [
+      "ctrl+alt+backspace"
+    ]
+  }
+]
