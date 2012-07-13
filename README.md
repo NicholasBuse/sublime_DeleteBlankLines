@@ -21,7 +21,6 @@ Linux:
 - Ctrl+Alt+Backspace --> Delete Blank Lines
 - Ctrl+Alt+Shift+Backspace --> Delete Surplus Blank Lines
 
-OSX:
 Installation
 ------------------
 
