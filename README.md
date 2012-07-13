@@ -17,6 +17,11 @@ OSX:
 - Ctrl+Alt+Delete --> Delete Blank Lines
 - Ctrl+Alt+Shift+Delete --> Delete Blank Lines
 
+Linux:
+- Ctrl+Alt+Backspace --> Delete Blank Lines
+- Ctrl+Alt+Shift+Backspace --> Delete Surplus Blank Lines
+
+OSX:
 Installation
 ------------------
 
