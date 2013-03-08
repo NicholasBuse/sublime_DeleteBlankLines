@@ -1,15 +1,22 @@
 import sublime, sublime_plugin, re
 
+st_version = 2
+
+# Warn about out-dated versions of ST3
+if sublime.version() == '':
+    st_version = 3
+    print('Package Control: Please upgrade to Sublime Text 3 build 3012 or newer')
+
+elif int(sublime.version()) > 3000:
+    st_version = 3
+
 class DeleteBlankLinesCommand( sublime_plugin.TextCommand ):
     def run( self, edit, surplus=False):
         newSelections = []
 
         # Create an() edit object, demarcating an undo group.
-        if (surplus):
-            edit = self.view.begin_edit( 'Delete Surplus Blank Lines' )
-        else:
-            edit = self.view.begin_edit( 'Delete Blank Lines' )
-
+        if (st_version == 2):
+            edit = self.view.begin_edit()
 
         # Loop through user selections.
         for currentSelection in self.view.sel():
@@ -23,7 +30,8 @@ class DeleteBlankLinesCommand( sublime_plugin.TextCommand ):
             self.view.sel().add( newSelection )
 
         # A corresponding call to end_edit() is required.
-        self.view.end_edit( edit )
+        if (st_version == 2):
+            self.view.end_edit( edit )
 
     def strip( self, edit, currentSelection, surplus ):
         # Convert the input range to a string, this represents the original selection.
