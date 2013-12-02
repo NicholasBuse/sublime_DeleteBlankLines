@@ -1,0 +1,21 @@
+[
+    {
+    "id": "edit",
+    "children":
+        [
+            {
+            "id": "line",
+            "children":
+                [
+                    {
+                        "command": "delete_blank_lines",
+                        "id":"delete-blank-lines",
+                        "caption":"Delete blank lines",
+                        "args": { "surplus": false },
+                        "keys": ["ctrl+alt+backspace"]
+                    }
+                ]
+            }
+        ]
+    }
+]
