@@ -14,8 +14,8 @@ Windows:
 - Ctrl+Alt+Shift+Backspace --> Delete Surplus Blank Lines
 
 OSX:
-- Ctrl+Alt+Delete --> Delete Blank Lines
-- Ctrl+Alt+Shift+Delete --> Delete Blank Lines
+- Fn+Ctrl+Option+Delete --> Delete Blank Lines
+- Fn+Ctrl+Option+Shift+Delete --> Delete Surplus Blank Lines
 
 Linux:
 - Ctrl+Alt+Backspace --> Delete Blank Lines
