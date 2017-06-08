@@ -1,4 +1,5 @@
-import sublime, sublime_plugin, re
+import sublime
+import sublime_plugin
 
 st_version = 2
 
@@ -9,6 +10,7 @@ if sublime.version() == '':
 
 elif int(sublime.version()) > 3000:
     st_version = 3
+
 
 class DeleteBlankLinesCommand( sublime_plugin.TextCommand ):
     def run( self, edit, surplus=False):
@@ -35,40 +37,16 @@ class DeleteBlankLinesCommand( sublime_plugin.TextCommand ):
 
     def strip( self, edit, currentSelection, surplus ):
         # Convert the input range to a string, this represents the original selection.
-        original = self.view.substr( currentSelection );
-
-        output_last = original
-        while (True):
-            if (surplus):
-                output = self.delete_surplus_blank_lines( output_last )
-            else:
-                output = self.delete_blank_lines( output_last )
-
-            if (output == output_last):
-                break
-            else:
-                output_last = output
-
+        tokens = { 'windows': '\r\n',
+                   'mac'    : '\r',
+                   'unix'   : '\n'}
+        line_endings = self.view.settings().get('default_line_ending')
+        rtnl = tokens.get(line_endings, '\n')
+        original = self.view.substr( currentSelection )
+        lines = filter(None, map(lambda s: s.rstrip(), original.split(rtnl)))  # strip the trailing spaces
+        if surplus:
+            rtnl *= 2
+        output = rtnl.join(lines)
         self.view.replace( edit, currentSelection, output )
 
         return sublime.Region( currentSelection.begin(), currentSelection.begin() + len(output) )
-
-    def delete_blank_lines(self, string):
-        line_endings = self.view.settings().get('default_line_ending')
-        if line_endings == 'windows':
-            string = string.replace('\r\n\r\n', '\r\n')
-        elif line_endings == 'mac':
-            string = string.replace('\r\r', '\r')
-        else: # unix
-            string = string.replace('\n\n', '\n')
-        return string
-
-    def delete_surplus_blank_lines(self, string):
-        line_endings = self.view.settings().get('default_line_ending')
-        if line_endings == 'windows':
-            string = string.replace('\r\n\r\n\r\n', '\r\n\r\n')
-        elif line_endings == 'mac':
-            string = string.replace('\r\r\r', '\r\r')
-        else: # unix
-            string = string.replace('\n\n\n', '\n\n')
-        return string
