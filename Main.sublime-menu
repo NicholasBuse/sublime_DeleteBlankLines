@@ -15,7 +15,6 @@
                         "keys": ["ctrl+alt+backspace"]
                     },
                      {
-                     
                         "command": "delete_blank_lines",
                         "id":"delete-blank-lines_s",
                         "caption":"Delete Surplus blank lines",
