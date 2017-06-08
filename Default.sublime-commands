@@ -1,0 +1,9 @@
+[
+    { "caption": "Delete Blank Lines",
+      "command": "delete_blank_lines",
+      "args": { "surplus": false} },
+
+    { "caption": "Delete Surplus Blank Lines",
+      "command": "delete_blank_lines",
+      "args": { "surplus": true} },
+]
