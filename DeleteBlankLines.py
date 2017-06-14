@@ -37,16 +37,27 @@ class DeleteBlankLinesCommand( sublime_plugin.TextCommand ):
 
     def strip( self, edit, currentSelection, surplus ):
         # Convert the input range to a string, this represents the original selection.
-        tokens = { 'windows': '\r\n',
-                   'mac'    : '\r',
-                   'unix'   : '\n'}
-        line_endings = self.view.settings().get('default_line_ending')
-        rtnl = tokens.get(line_endings, '\n')
-        original = self.view.substr( currentSelection )
-        lines = filter(None, map(lambda s: s.rstrip(), original.split(rtnl)))  # strip the trailing spaces
-        if surplus:
-            rtnl *= 2
-        output = rtnl.join(lines)
+        orig  = self.view.substr(currentSelection)
+        lines = orig.splitlines()
+
+        i = 0
+        haveBlank = False
+
+        while i < len(lines)-1:
+            if lines[i].rstrip() == '':
+                if not surplus or haveBlank:
+                    del lines[i]
+                else:
+                    i += 1
+                haveBlank = True
+            else:
+                haveBlank = False
+                i += 1
+            # END: if not surplus
+        # END: while
+
+        output = '\n'.join(lines)
+
         self.view.replace( edit, currentSelection, output )
 
         return sublime.Region( currentSelection.begin(), currentSelection.begin() + len(output) )
