@@ -1,3 +1,10 @@
 {
-   "delete_blank_lines_on_save": false
+    // Settings to control "Delete Blank Lines on_pre_save()"
+    // If 'delete_surplus_blank_lines_on_save' is set, it takes presidence over
+    //    'delete_blank_lines_on_save'
+    "delete_blank_lines_on_save": false,
+    "delete_surplus_blank_lines_on_save": false,
+
+    // If there is no text selection, operate on the whole file.
+    "operate_on_whole_file_when_selection_empty": true
 }
