@@ -20,16 +20,22 @@ class DeleteBlankLinesCommand( sublime_plugin.TextCommand ):
         if (st_version == 2):
             edit = self.view.begin_edit()
 
-        # Loop through user selections.
-        for currentSelection in self.view.sel():
-            # Strip blank lines
-            newSelections.append( self.strip( edit, currentSelection, surplus ) )
+        # If there is no (empty) selection, operate on the whole file.
+        #     else, operate only on each selection (update the selection for changes)
+        if len(self.view.sel()) == 1 and self.view.substr(self.view.sel()[0]) == "":
+            self.strip( edit, sublime.Region(0, self.view.size()), surplus )
+        else:
+            # Loop through user selections.
+            for currentSelection in self.view.sel():
+                # Strip blank lines
+                newSelections.append( self.strip( edit, currentSelection, surplus ) )
 
-        # Clear selections since they've been modified.
-        self.view.sel().clear()
+            # Clear selections since they've been modified.
+            self.view.sel().clear()
 
-        for newSelection in newSelections:
-            self.view.sel().add( newSelection )
+            for newSelection in newSelections:
+                self.view.sel().add( newSelection )
+        # END: if len()...
 
         # A corresponding call to end_edit() is required.
         if (st_version == 2):
@@ -61,3 +67,10 @@ class DeleteBlankLinesCommand( sublime_plugin.TextCommand ):
         self.view.replace( edit, currentSelection, output )
 
         return sublime.Region( currentSelection.begin(), currentSelection.begin() + len(output) )
+
+
+class DeleteBlankLines(sublime_plugin.EventListener):
+    def on_pre_save(self, view):
+        settings = sublime.load_settings('DeleteBlankLines.sublime-settings')
+        if settings and settings.has('delete_blank_lines_on_save') and settings.get("delete_blank_lines_on_save") is True:
+            view.run_command("delete_blank_lines")
