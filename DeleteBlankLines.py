@@ -16,6 +16,8 @@ class DeleteBlankLinesCommand( sublime_plugin.TextCommand ):
     def run( self, edit, surplus=False):
         newSelections = []
 
+        col, row = self.view.viewport_position()
+
         settings = sublime.load_settings('DeleteBlankLines.sublime-settings')
 
         # Create an() edit object, demarcating an undo group.
@@ -45,6 +47,8 @@ class DeleteBlankLinesCommand( sublime_plugin.TextCommand ):
         # A corresponding call to end_edit() is required.
         if (st_version == 2):
             self.view.end_edit( edit )
+
+        self.view.set_viewport_position([0, row])
 
     def strip( self, edit, currentSelection, surplus ):
         # Convert the input range to a string, this represents the original selection.
